@@ -12,6 +12,7 @@ using BAMTriviaProject2MVC.AuthModels;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using BAMTriviaProject2MVC.ApiModels;
+using BAMTriviaProject2MVC.ViewModels;
 
 namespace BAMTriviaProject2MVC.Controllers
 {
@@ -78,28 +79,31 @@ namespace BAMTriviaProject2MVC.Controllers
             }
 
             // login success
-            return RedirectToAction("Account", "Home");
+            return RedirectToAction("UserAccount", "Home");
         }
 
-        public async Task<ActionResult> Account()
+        [HttpGet]
+        [HttpPost]
+        public async Task<ActionResult> UserAccount()
         {
             var request = CreateRequestToService(HttpMethod.Get, $"/api/Users/Account");
             var response = await HttpClient.SendAsync(request);
 
-            //if (!response.IsSuccessStatusCode)
-            //{
-            //    if (response.StatusCode == HttpStatusCode.Unauthorized)
-            //    {
-            //        return RedirectToAction("Login", "Account");
-            //    }
-            //    return View("Error");
-            //}
-
             var jsonString = await response.Content.ReadAsStringAsync();
+            ApiUsersModel user = JsonConvert.DeserializeObject<ApiUsersModel>(jsonString);
 
-            ApiUsersModel quizzes = JsonConvert.DeserializeObject<ApiUsersModel>(jsonString);
+            UsersViewModel viewModel = new UsersViewModel
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PW = user.PW,
+                Username = user.Username,
+                CreditCardNumber = user.CreditCardNumber,
+                PointTotal = user.PointTotal,
+                AccountType = user.AccountType
+             };
 
-            return View(quizzes);
+            return View(viewModel);
         }
 
         // POST: /Account/Logout
@@ -179,6 +183,32 @@ namespace BAMTriviaProject2MVC.Controllers
 
             // login success
             return RedirectToAction("Login", "Home");
+        }
+
+        // POST: /Account/Logout
+        [HttpPost]
+        public async Task<ActionResult> Edit(UsersViewModel usersModel)
+        {
+            HttpRequestMessage request = CreateRequestToService(HttpMethod.Put,
+                "api/Users", usersModel);
+
+            HttpResponseMessage response;
+            try
+            {
+                response = await HttpClient.SendAsync(request);
+            }
+            catch (HttpRequestException)
+            {
+                return View("Error", new ErrorViewModel());
+            }
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return View("Error", new ErrorViewModel());
+            }
+
+            // logout success
+            return RedirectToAction("Account", "Home");
         }
 
         private bool PassCookiesToClient(HttpResponseMessage apiResponse)
