@@ -4,6 +4,10 @@
     ViewData["Title"] = "UserAccount";
 }
 
+@{
+    var account = ViewData["accountDetails"] as BAMTriviaProject2MVC.AuthModels.AuthAccountDetails;
+}
+
 <h1>User Account</h1>
 
 <h4>User Info</h4>
@@ -28,9 +32,9 @@
                 <span asp-validation-for="PW" class="text-danger"></span>
             </div>*@
             <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
+                <label asp-for="Username" class="control-label" hidden></label>
+                <input asp-for="Username" class="form-control" hidden/>
+                <span asp-validation-for="Username" class="text-danger" hidden></span>
             </div>
             <div class="form-group">
                 <label asp-for="CreditCardNumber" class="control-label"></label>
@@ -51,6 +55,54 @@
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
+
+        @if (!account.AccountType)
+        {
+        <form asp-controller="Home" asp-action="Delete">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label" hidden></label>
+                <input asp-for="FirstName" class="form-control" hidden />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label" hidden></label>
+                <input asp-for="LastName" class="form-control" hidden />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+            <label asp-for="PW" class="control-label"></label>
+            <input asp-for="PW" class="form-control" />
+            <span asp-validation-for="PW" class="text-danger"></span>
+        </div>*@
+            <div class="form-group">
+                <label asp-for="Username" class="control-label" hidden></label>
+                <input asp-for="Username" class="form-control" hidden />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreditCardNumber" class="control-label" hidden></label>
+                <input asp-for="CreditCardNumber" class="form-control" hidden />
+                <span asp-validation-for="CreditCardNumber" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+            <label asp-for="PointTotal" class="control-label"></label>
+            <input asp-for="PointTotal" class="form-control" />
+            <span asp-validation-for="PointTotal" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="AccountType" class="control-label"></label>
+            <input asp-for="AccountType" class="form-control" />
+            <span asp-validation-for="AccountType" class="text-danger"></span>
+        </div>*@
+
+            <div class="form-group">
+                <input type="submit" value="Delete User" class="btn btn-primary" />
+            </div>
+        </form>
+        }
+
+        
     </div>
 </div>
 

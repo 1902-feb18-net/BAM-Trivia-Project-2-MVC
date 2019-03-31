@@ -19,7 +19,6 @@ namespace BAMTriviaProject2MVC.ViewModels
         [Display(Name = "Password")]
         public string PW { get; set; }
 
-        [BindNever]
         [Display(Name = "Username")]
         public string Username { get; set; }
 

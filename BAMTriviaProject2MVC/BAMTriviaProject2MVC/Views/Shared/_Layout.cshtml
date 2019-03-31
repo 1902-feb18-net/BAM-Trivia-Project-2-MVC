@@ -33,12 +33,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    @if (account != null)
-                    {
-                        <form class="form-inline" asp-controller="Home" asp-action="UserAccount">
-                            <button class="btn btn-outline-info text-light" type="submit" style="font-size: 1.4em;">Account</button>
-                        </form>
-                    }
+                    
                     @if (account != null)
                     {
                         <form class="form-inline" asp-controller="Home" asp-action="Logout">
@@ -60,10 +55,25 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-light" href="http://localhost:4200" style="font-size: 1.4em;">Quizzes (Angular)</a>
-                            </li>   
+                            </li>
                             @*<li class="nav-item">
             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </li>*@
+                            @if (account != null)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="UserAccount" style="font-size: 1.4em;">Edit/Delete Account</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="AccountDetails" style="font-size: 1.4em;">Account</a>
+                                </li>
+                                @*<form class="form-inline" asp-controller="Home" asp-action="UserAccount">
+                <button class="btn btn-outline-info text-light" type="submit" style="font-size: 1.4em;">Edit/Delete Account</button>
+            </form>
+            <form class="form-inline" asp-controller="Home" asp-action="AccountDetails">
+                <button class="btn btn-outline-info text-light" type="submit" style="font-size: 1.4em;">Account</button>
+            </form>*@
+                            }
                         </ul>
                 </div>
             </div>
